@@ -1,7 +1,12 @@
 language: python
 python:
-    - "3.2"
+  - "3.6.1"
+
 cache: pip
 install:
+  - pip install coverage pytest pytest-cov
 script:
-    - python -m unittest discover -s src
+  - python -m pytest --cov=src/ src/
+
+after_success:
+  - CODECLIMATE_REPO_TOKEN=78eab31a4a8794fab2dd35f4aa8fa8f1c301c8e745475c4e9d4d9fa59be05500 codeclimate-test-reporter
