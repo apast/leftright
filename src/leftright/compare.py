@@ -10,7 +10,7 @@ class Base64Comparator():
         assert len(a) == len(b)
 
         if start < 0:
-            raise IndexError("negative indexes are not allowed")
+            raise IndexError("negative start index is not allowed")
 
         l = len(a)
 
@@ -60,9 +60,15 @@ class TestLeftRightDiff(unittest.TestCase):
         self.assertEqual(3, Base64Comparator().diff("nheA", "nhea"))
         self.assertEqual(2, Base64Comparator().diff("Aa ", "Aac"))
 
+    def test_next_different_sequence_index_from_start_index(self):
+        self.assertEqual(1, Base64Comparator().diff("10", "11", 0))
+        self.assertEqual(1, Base64Comparator().diff("10", "11", 1))
+        self.assertEqual(2, Base64Comparator().diff("110", "111", 0))
+        self.assertEqual(2, Base64Comparator().diff("110", "111", 2))
+
     def test_next_different_sequence_index_from_invalid_start_index(self):
         self.assertRaises(IndexError, Base64Comparator().diff, "", "", 1)
         self.assertRaises(IndexError, Base64Comparator().diff, "a", "a", 2)
         self.assertRaises(IndexError, Base64Comparator().diff, "ab", "ab", 2)
         self.assertRaises(IndexError, Base64Comparator().diff, "ab", "ac", 2)
-        self.assertRaisesRegex(IndexError, "^negative indexes are not allowed$", Base64Comparator().diff, "", "", -1)
+        self.assertRaisesRegex(IndexError, "^negative start index is not allowed$", Base64Comparator().diff, "", "", -1)
