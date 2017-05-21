@@ -19,7 +19,8 @@ class LeftRightCore():
         """
         key = "%s:%s" % (id, qualifier)
         if value is None:
-            del self.store[key]
+            if key in self.store:
+                del self.store[key]
         else:
             self.store[key] = value
 

@@ -5,7 +5,7 @@ from leftright.core import LeftRightCore
 
 class TestDiffStorage(unittest.TestCase):
 
-    def test_change_storage(self):
+    def test_switch_portable_storage(self):
         core_a = LeftRightCore()
         core_b = LeftRightCore({})
 
@@ -126,6 +126,21 @@ class TestLeftRightCoreStorage(unittest.TestCase):
 
     def tearDown(self):
         self.core.store.clear()
+
+    def test_set_get(self):
+        id = "abc"
+        value = "sequence"
+        self.assertRaises(KeyError, self.core._get, id, "left")
+
+        self.core._set(id, "left", value)
+        self.assertEquals(value, self.core._get(id, "left"))
+
+        self.core._set(id, "left", None)
+        self.assertRaises(KeyError, self.core._get, id, "left")
+
+    def test_set_none_value(self):
+        self.core._set("id", "q", None)
+        self.assertRaises(KeyError, self.core._get, "id", "q")
 
     def test_update_right(self):
         id = "id"
