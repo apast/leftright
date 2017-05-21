@@ -19,16 +19,16 @@ class TestLeftRightRestApi(AsyncHTTPTestCase):
         resource_base = "/v1/diff/%s" % id
 
         response = self.fetch(resource_base)
-        self.assertEqual(404, response.code)
+        self.assertEqual(404, response.code, "diff :id should not exists")
 
         response = self.fetch(resource_base+"/left/contentleft", method="POST", body="")
         self.assertEqual(201, response.code)
 
         response = self.fetch(resource_base)
-        self.assertEqual(424, response.code, "Response code should be compatible with Partial Content, when one side of diff is invalid")
+        self.assertEqual(424, response.code, "diff :id exists, but its content should be partial")
 
         response = self.fetch(resource_base+"/right/contentright", method="POST", body="")
         self.assertEqual(201, response.code)
 
         response = self.fetch(resource_base)
-        self.assertEqual(200, response.code, "Diff was found and is complete")
+        self.assertEqual(200, response.code, "diff :id exists and should complete")
