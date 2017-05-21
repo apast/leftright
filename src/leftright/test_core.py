@@ -3,7 +3,31 @@ import unittest
 from leftright.core import LeftRightCore
 
 
-class TestLEftRightCoreComparison(unittest.TestCase):
+class TestDiffStorage(unittest.TestCase):
+
+    def test_change_storage(self):
+        core_a = LeftRightCore()
+        core_b = LeftRightCore({})
+
+        id = "abc"
+        core_a.set_left(id, "valuea")
+        core_a.set_right(id, "valuea")
+
+        # "Key was registered into storage_a and should not be present at storage_b")
+        self.assertRaises(KeyError, core_b.get_left, id)
+        # "Key was registered into storage_a and should not be present at storage_b")
+        self.assertRaises(KeyError, core_b.get_right, id)
+
+        core_b.set_left(id, "valueb")
+        core_b.set_right(id, "valueb")
+
+        self.assertNotEqual(core_a.get_left(id), core_b.get_left(id),
+                          msg="Different keys were registered for the same ID and should be different in each storage")
+        self.assertNotEqual(core_a.get_right(id), core_b.get_right(id),
+                          msg="Different keys were registered for the same ID and should be different in each storage")
+
+
+class TestLeftRightCoreComparison(unittest.TestCase):
 
     def setUp(self):
         self.core = LeftRightCore()

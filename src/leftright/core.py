@@ -3,8 +3,8 @@ from leftright.compare import Base64Comparator
 
 class LeftRightCore():
 
-    def __init__(self):
-        self.store = {}
+    def __init__(self, store=None):
+        self.store = {} if store is None else store
 
     def _set(self, id, qualifier, value):
         """
