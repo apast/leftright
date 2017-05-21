@@ -5,8 +5,8 @@ from leftright.core import LeftRightCore
 
 class DiffSideApiEndpoint(RequestHandler):
 
-    def initialize(self, **kwargs):
-        self.core = LeftRightCore(kwargs["diff_storage"])
+    def initialize(self, diff_storage):
+        self.core = LeftRightCore(diff_storage)
 
     def post(self, id, side, value):
         if "left" == side:
