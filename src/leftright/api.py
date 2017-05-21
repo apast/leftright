@@ -38,3 +38,15 @@ class DiffApiEndpoint(RequestHandler):
         except KeyError as ke:
             self.set_status(404)
         self.flush()
+
+
+class DiffApplication(object):
+
+    """Docstring for DiffApplication. """
+    def build(self, debug=False):
+        diff_storage = {}
+        endpoints = [
+            (r"/v1/diff/(?P<id>[^$/]+)/?$", DiffApiEndpoint, {"diff_storage": diff_storage}),
+            (r"/v1/diff/(?P<id>[^$/]+)/(?P<side>(?:left|right))/(?P<value>[0-9A-Za-z]+)$", DiffSideApiEndpoint, {"diff_storage": diff_storage}),
+        ]
+        return Application(endpoints, debug=debug)
