@@ -8,6 +8,7 @@ class LeftRightCore():
     RESULT_DIFF_EQUALS="equals"
     RESULT_DIFF_NOT_EQUALS="not_equals"
     RESULT_DIFF_INCONSISTENT="inconsistent"
+    RESULT_DIFF_LENGTH_UNMATCH="lenght_unmatch"
 
     def __init__(self, store=None):
         self.store = {} if store is None else store
@@ -116,7 +117,7 @@ class LeftRightCore():
                 else:
                     state = LeftRightCore.RESULT_DIFF_EQUALS
             except AssertionError:
-                state = LeftRightCore.RESULT_DIFF_INCONSISTENT
+                state = LeftRightCore.RESULT_DIFF_LENGTH_UNMATCH
                 diff_blocks = []
         elif left_in or right_in:
             state = LeftRightCore.RESULT_DIFF_INCONSISTENT

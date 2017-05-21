@@ -1,3 +1,4 @@
+import json
 from tornado.web import Application, RequestHandler
 
 from leftright.core import LeftRightCore
@@ -35,6 +36,8 @@ class DiffApiEndpoint(RequestHandler):
                 self.set_status(424)
             else:
                 self.set_status(200)
+
+            self.write(json.dumps(diff))
         except KeyError as ke:
             self.set_status(404)
         self.flush()
