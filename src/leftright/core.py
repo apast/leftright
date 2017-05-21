@@ -1,9 +1,16 @@
+from leftright.compare import Base64Comparator
+
+
 class LeftRightCore():
 
     def __init__(self):
         self.store = {}
 
     def _set(self, id, qualifier, value):
+        """
+        Sets entry for concatenation of :id:qualifier.
+        If value is None, it removes data associated data from storage
+        """
         key = "%s:%s" % (id, qualifier)
         if value is None:
             del self.store[key]
@@ -12,6 +19,19 @@ class LeftRightCore():
 
     def _get(self, id, qualifier):
         return self.store["%s:%s" % (id, qualifier)]
+
+    def compare(self, id, offset=0):
+        """
+        Compare sequencie entries for given :id key.
+
+        :id: key for left & right sequences.
+        :offset: Positive index of the position to start the difference lookup.
+        :returns: The index of the next different char between sentences.
+        :raises:
+            KeyError if :id:left or :id:right doesn't exists.
+            AssertionError in case of :id:left and :id:right differs in length
+        """
+        return Base64Comparator().diff(self.get_left(id), self.get_right(id), offset)
 
     def set_left(self, id, value):
         """TODO: Docstring for set_rigth.

@@ -27,7 +27,7 @@ class Base64Comparator():
         return True
 
     def diff(self, a, b, offset=0):
-        """ Lookup for next different char sequence comparing 'a' to 'b'
+        """ Lookup for the index of the next different char sequence comparing 'a' to 'b'
         Both 'a' and 'b' should have the same length and offset value should be
         less than sequence length.
 

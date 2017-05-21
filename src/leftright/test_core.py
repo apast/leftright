@@ -1,18 +1,87 @@
+import unittest
+
 from leftright.core import LeftRightCore
 
 
-import unittest
-
-
-class TestLeftRightCore(unittest.TestCase):
-
-    """Test case docstring."""
+class TestLEftRightCoreComparison(unittest.TestCase):
 
     def setUp(self):
         self.core = LeftRightCore()
 
     def tearDown(self):
-        pass
+        self.core.store.clear()
+
+    def test_comparison_of_different_length_sequences(self):
+        id = "id"
+
+        self.core.set_left(id, "")
+        self.core.set_right(id, "a")
+        self.assertRaises(AssertionError, self.core.compare, id)
+
+        self.core.set_left(id, "a")
+        self.core.set_right(id, "")
+        self.assertRaises(AssertionError, self.core.compare, id)
+
+        self.core.set_left(id, "aa")
+        self.core.set_right(id, "a")
+        self.assertRaises(AssertionError, self.core.compare, id)
+
+    def test_comparison_of_similar_with_multiple_diff_sequences(self):
+        id = "id"
+        self.core.set_left(id, "bab")
+        self.core.set_right(id, "aaa")
+        self.assertEqual(0, self.core.compare(id, offset=0))
+        self.assertEqual(2, self.core.compare(id, offset=2))
+
+        self.core.set_left(id, "abab")
+        self.core.set_right(id, "aaaa")
+        self.assertEqual(1, self.core.compare(id, offset=0))
+        self.assertEqual(3, self.core.compare(id, offset=2))
+
+    def test_comparison_of_similar_but_not_equal_sequences(self):
+        id = "id"
+        self.core.set_left(id, "a")
+        self.core.set_right(id, "A")
+        self.assertEqual(0, self.core.compare(id))
+
+        self.core.set_left(id, "A")
+        self.core.set_right(id, "a")
+        self.assertEqual(0, self.core.compare(id))
+
+        self.core.set_left(id, "_")
+        self.core.set_right(id, "-")
+        self.assertEqual(0, self.core.compare(id))
+
+        self.core.set_left(id, "aa")
+        self.core.set_right(id, "ab")
+        self.assertEqual(1, self.core.compare(id))
+
+        self.core.set_left(id, "aaaa")
+        self.core.set_right(id, "aaab")
+        self.assertEqual(3, self.core.compare(id))
+
+    def test_comparison_of_equal_sequences(self):
+        id = "id"
+        self.core.set_left(id, "")
+        self.core.set_right(id, "")
+        self.assertTrue(self.core.compare(id))
+
+        self.core.set_left(id, "a")
+        self.core.set_right(id, "a")
+        self.assertTrue(self.core.compare(id))
+
+        self.core.set_left(id, "A")
+        self.core.set_right(id, "A")
+        self.assertTrue(self.core.compare(id))
+
+
+class TestLeftRightCoreStorage(unittest.TestCase):
+
+    def setUp(self):
+        self.core = LeftRightCore()
+
+    def tearDown(self):
+        self.core.store.clear()
 
     def test_update_right(self):
         id = "id"
