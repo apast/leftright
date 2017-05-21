@@ -3,6 +3,12 @@ from leftright.compare import Base64Comparator
 
 class LeftRightCore():
 
+    STATE_COMPLETE="complete"
+    STATE_PARTIAL_CONTENT="partial_content"
+    RESULT_DIFF_EQUALS="equals"
+    RESULT_DIFF_NOT_EQUALS="not_equals"
+    RESULT_DIFF_INCONSISTENT="inconsistent"
+
     def __init__(self, store=None):
         self.store = {} if store is None else store
 

@@ -31,7 +31,7 @@ class DiffApiEndpoint(RequestHandler):
 
         try:
             diff = self.core.get_diff(id)
-            if diff["state"] == "partial_content":
+            if diff["state"] == LeftRightCore.STATE_PARTIAL_CONTENT:
                 self.set_status(424)
             else:
                 self.set_status(200)

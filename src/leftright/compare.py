@@ -22,7 +22,7 @@ class Base64Comparator():
             raise IndexError("negative start index is not allowed")
 
         if 0 < offset >= len(a):
-            raise IndexError("start index is greather than length(a)")
+            raise IndexError("start offset is greather than or equal to length(a)")
 
         return True
 
