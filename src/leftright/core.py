@@ -20,7 +20,10 @@ class LeftRightCore():
     def _get(self, id, qualifier):
         return self.store["%s:%s" % (id, qualifier)]
 
-    def compare(self, id, offset=0):
+    def diff_length(self, id, offset=0):
+        return Base64Comparator().diff_length(self.get_left(id), self.get_right(id), offset)
+
+    def next_diff(self, id, offset=0):
         """
         Compare sequencie entries for given :id key.
 

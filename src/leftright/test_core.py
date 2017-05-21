@@ -16,63 +16,83 @@ class TestLEftRightCoreComparison(unittest.TestCase):
 
         self.core.set_left(id, "")
         self.core.set_right(id, "a")
-        self.assertRaises(AssertionError, self.core.compare, id)
+        self.assertRaises(AssertionError, self.core.next_diff, id)
 
         self.core.set_left(id, "a")
         self.core.set_right(id, "")
-        self.assertRaises(AssertionError, self.core.compare, id)
+        self.assertRaises(AssertionError, self.core.next_diff, id)
 
         self.core.set_left(id, "aa")
         self.core.set_right(id, "a")
-        self.assertRaises(AssertionError, self.core.compare, id)
+        self.assertRaises(AssertionError, self.core.next_diff, id)
 
     def test_comparison_of_similar_with_multiple_diff_sequences(self):
         id = "id"
         self.core.set_left(id, "bab")
         self.core.set_right(id, "aaa")
-        self.assertEqual(0, self.core.compare(id, offset=0))
-        self.assertEqual(2, self.core.compare(id, offset=2))
+        first_diff = self.core.next_diff(id, offset=0)
+        first_length = self.core.diff_length(id, offset=first_diff)
+        self.assertEqual(0, first_diff)
+        self.assertEqual(2, self.core.next_diff(id, offset=first_diff+first_length))
 
         self.core.set_left(id, "abab")
         self.core.set_right(id, "aaaa")
-        self.assertEqual(1, self.core.compare(id, offset=0))
-        self.assertEqual(3, self.core.compare(id, offset=2))
+        first_diff = self.core.next_diff(id, offset=0)
+        first_length = self.core.diff_length(id, offset=first_diff)
+        self.assertEqual(1, self.core.next_diff(id, offset=0))
+        self.assertEqual(3, self.core.next_diff(id, offset=first_diff+first_length))
 
     def test_comparison_of_similar_but_not_equal_sequences(self):
         id = "id"
         self.core.set_left(id, "a")
         self.core.set_right(id, "A")
-        self.assertEqual(0, self.core.compare(id))
+        next_diff = self.core.next_diff(id)
+        self.assertEqual(0, next_diff)
+        self.assertEqual(1, self.core.diff_length(id, next_diff))
 
         self.core.set_left(id, "A")
         self.core.set_right(id, "a")
-        self.assertEqual(0, self.core.compare(id))
+        next_diff = self.core.next_diff(id)
+        self.assertEqual(0, next_diff)
+        self.assertEqual(1, self.core.diff_length(id, next_diff))
 
         self.core.set_left(id, "_")
         self.core.set_right(id, "-")
-        self.assertEqual(0, self.core.compare(id))
+        next_diff = self.core.next_diff(id)
+        self.assertEqual(0, next_diff)
+        self.assertEqual(1, self.core.diff_length(id, next_diff))
 
         self.core.set_left(id, "aa")
         self.core.set_right(id, "ab")
-        self.assertEqual(1, self.core.compare(id))
+        next_diff = self.core.next_diff(id)
+        self.assertEqual(1, next_diff)
+        self.assertEqual(1, self.core.diff_length(id, next_diff))
 
         self.core.set_left(id, "aaaa")
         self.core.set_right(id, "aaab")
-        self.assertEqual(3, self.core.compare(id))
+        next_diff = self.core.next_diff(id)
+        self.assertEqual(3, next_diff)
+        self.assertEqual(1, self.core.diff_length(id, next_diff))
+
+        self.core.set_left(id, "aaaaac")
+        self.core.set_right(id, "aaabbc")
+        next_diff = self.core.next_diff(id)
+        self.assertEqual(3, next_diff)
+        self.assertEqual(2, self.core.diff_length(id, 3))
 
     def test_comparison_of_equal_sequences(self):
         id = "id"
         self.core.set_left(id, "")
         self.core.set_right(id, "")
-        self.assertTrue(self.core.compare(id))
+        self.assertEqual(-1, self.core.next_diff(id))
 
         self.core.set_left(id, "a")
         self.core.set_right(id, "a")
-        self.assertTrue(self.core.compare(id))
+        self.assertEqual(-1, self.core.next_diff(id))
 
         self.core.set_left(id, "A")
         self.core.set_right(id, "A")
-        self.assertTrue(self.core.compare(id))
+        self.assertEqual(-1, self.core.next_diff(id))
 
 
 class TestLeftRightCoreStorage(unittest.TestCase):
