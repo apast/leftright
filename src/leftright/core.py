@@ -109,11 +109,15 @@ class LeftRightCore():
         right_in = "%s:right"%id in self.store
 
         if left_in and right_in:
-            diff_blocks = self.build_diff_blocks(id)
-            if diff_blocks:
-                state = LeftRightCore.RESULT_DIFF_NOT_EQUALS
-            else:
-                state = LeftRightCore.RESULT_DIFF_EQUALS
+            try:
+                diff_blocks = self.build_diff_blocks(id)
+                if diff_blocks:
+                    state = LeftRightCore.RESULT_DIFF_NOT_EQUALS
+                else:
+                    state = LeftRightCore.RESULT_DIFF_EQUALS
+            except AssertionError:
+                state = LeftRightCore.RESULT_DIFF_INCONSISTENT
+                diff_blocks = []
         elif left_in or right_in:
             state = LeftRightCore.RESULT_DIFF_INCONSISTENT
             diff_blocks = []
