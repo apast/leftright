@@ -90,12 +90,55 @@ class LeftRightCore():
         right_in = "%s:right"%id in self.store
 
         result = dict()
-        import json
 
         if left_in and right_in:
-            state = "ok"
-            return dict(state=state)
+            result["state"] = LeftRightCore.STATE_COMPLETE
         elif left_in or right_in:
-            return dict(state="partial_content")
+            result["state"] = LeftRightCore.STATE_PARTIAL_CONTENT
         else:
             raise KeyError()
+
+        result["left"] = dict(length=len(self.get_left(id))) if left_in else None
+        result["right"] = dict(length=len(self.get_right(id))) if right_in else None
+        result["compare"] = self.get_compare_report(id)
+
+        return result
+
+    def get_compare_report(self, id):
+        left_in = "%s:left"%id in self.store
+        right_in = "%s:right"%id in self.store
+
+        if left_in and right_in:
+            diff_blocks = self.build_diff_blocks(id)
+            if diff_blocks:
+                state = LeftRightCore.RESULT_DIFF_NOT_EQUALS
+            else:
+                state = LeftRightCore.RESULT_DIFF_EQUALS
+        elif left_in or right_in:
+            state = LeftRightCore.RESULT_DIFF_INCONSISTENT
+            diff_blocks = []
+        else:
+            raise KeyError()
+
+        report = dict()
+        report["state"] = state
+        report["diff_blocks"] = diff_blocks
+        return report
+
+    def build_diff_blocks(self, id):
+        blocks = []
+
+        diff_idx = self.next_diff(id, offset=0)
+
+        while diff_idx > -1:
+            length = self.diff_length(id, offset=diff_idx)
+            blocks.append({"offset": diff_idx, "length": length})
+
+            # lookup for the next sequence
+            next_offset = diff_idx+length
+            try:
+                diff_idx = self.next_diff(id, offset=next_offset)
+            except IndexError:
+                diff_idx = -1
+
+        return blocks
