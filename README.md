@@ -38,6 +38,28 @@ For some help, you can run:
 python -m leftright -h
 ```
 
+
+## Using the tool
+
+```
+# Registering a new string to left side
+curl -XPOST -vv http://localhost:8080/v1/diff/abc/left/Y29udGVudHJpa25hc2tqZGxhbWRsa3Nh
+
+# Retrieving string from left side
+curl -XGET -vv http://localhost:8080/v1/diff/abc/left/Y29udGVudHJpa25hc2tqZGxhbWRsa3Nh
+
+# Registering a new string to right side
+curl -XPOST -vv http://localhost:8080/v1/diff/abc/left/Y29udGVudHJpa25hc2tqZGxhbWRsa3Nh
+
+# Retrieving string from right side
+curl -XGET -vv http://localhost:8080/v1/diff/abc/right/Y29udGVudHJpZ2h0
+
+# Retrieving full diff report comparing left to right side
+curl -XGET -vv http://localhost:8080/v1/diff/abc
+```
+
+
+
 ## Continuous Integration
 Our Travis-CI dashboard is available and there you can following the most updated info about build status, branch evolution and tests & code coverage statuses:
 
