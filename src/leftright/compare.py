@@ -22,12 +22,12 @@ class Base64Comparator():
             raise IndexError("negative start index is not allowed")
 
         if 0 < offset >= len(a):
-            raise IndexError("start index is greather than length(a)")
+            raise IndexError("start offset is greather than or equal to length(a)")
 
         return True
 
     def diff(self, a, b, offset=0):
-        """ Lookup for next different char sequence comparing 'a' to 'b'
+        """ Lookup for the index of the next different char sequence comparing 'a' to 'b'
         Both 'a' and 'b' should have the same length and offset value should be
         less than sequence length.
 
