@@ -107,9 +107,25 @@ class LeftRightCore():
 
         return result
 
+    def exists(self, id):
+        left_in = "%s:left"%id in self.store
+        right_in = "%s:right"%id in self.store
+        return left_in or right_in
+
+    def is_complete(self, id):
+        left_in = "%s:left"%id in self.store
+        right_in = "%s:right"%id in self.store
+        return left_in and right_in
+
+    def is_partial(self, id):
+        return not self.is_complete(id)
+
     def get_compare_report(self, id):
         left_in = "%s:left"%id in self.store
         right_in = "%s:right"%id in self.store
+
+        if not self.exists(id):
+            raise KeyError()
 
         if left_in and right_in:
             try:
@@ -124,8 +140,6 @@ class LeftRightCore():
         elif left_in or right_in:
             state = LeftRightCore.RESULT_DIFF_INCONSISTENT
             diff_blocks = []
-        else:
-            raise KeyError()
 
         report = dict()
         report["state"] = state

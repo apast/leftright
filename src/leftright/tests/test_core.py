@@ -368,3 +368,22 @@ class TestLeftRightCoreStorage(unittest.TestCase):
             self.assertDictContainsSubset(dict(state=LeftRightCore.STATE_PARTIAL_CONTENT), self.core.get_diff(id))
             self.core.set_right(id, None)
             self.assertRaises(KeyError, self.core.get_diff, id)
+
+    def test_exists(self):
+        id = "id"
+        self.assertFalse(self.core.exists(id))
+
+        self.core.set_left(id, "abc")
+        self.assertTrue(self.core.exists(id))
+        self.assertTrue(self.core.is_partial(id))
+        self.assertFalse(self.core.is_complete(id))
+
+        self.core.set_right(id, "abc")
+        self.assertTrue(self.core.exists(id))
+        self.assertFalse(self.core.is_partial(id))
+        self.assertTrue(self.core.is_complete(id))
+
+        self.core.set_left(id, None)
+        self.assertTrue(self.core.exists(id))
+        self.assertTrue(self.core.is_partial(id))
+        self.assertFalse(self.core.is_complete(id))
