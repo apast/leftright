@@ -54,7 +54,7 @@ Our dashboard for code quality is running over Code Climate platform and can be 
 ## Stay in Touch
 
 If you want to contact me, you can find me out at:
-+ [Linked In](https://linkedin.com/in/andrepastore)
++ [LinkedIn](https://linkedin.com/in/andrepastore)
 + [Twitter](https://twitter.com/apast)
 
 
