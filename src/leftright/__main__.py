@@ -1,6 +1,10 @@
+import logging
 from tornado.ioloop import IOLoop
 
 from leftright.api import DiffApplication
+
+
+LOG = logging.getLogger(__name__)
 
 
 class DiffApplicationRunner():
@@ -26,14 +30,19 @@ class DiffApplicationRunner():
 
     def prepare(self, port=8080, debug=False):
         app =  DiffApplication().build(debug=debug)
+        LOG.info("Debug mode is %s", "enabled" if debug else "disabled")
+        LOG.info("Setting server listen port to %s", port)
         app.listen(port)
         return app
 
     def start_loop(self):
+        LOG.info("Starting server loop. Press Ctrl+C to quit")
         IOLoop.current().start()
+        LOG.info("Server was stopped. Bye")
 
 
 if __name__ == '__main__':
     import sys
+    logging.basicConfig(level=logging.INFO)
     runner = DiffApplicationRunner()
     runner.run(sys.argv[1:])
