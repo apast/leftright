@@ -70,6 +70,12 @@ class DiffApiEndpoint(RequestHandler):
     def initialize(self, diff_storage):
         self.core = LeftRightCore(diff_storage)
 
+    @return_future
+    def get_diff(self, id, callback=None):
+        diff = self.core.get_diff(id)
+        callback(diff)
+
+    @coroutine
     def get(self, id):
         """ Returns diff report for a given diff :id
 
@@ -78,7 +84,8 @@ class DiffApiEndpoint(RequestHandler):
         """
 
         try:
-            diff = self.core.get_diff(id)
+            diff = yield self.get_diff(id)
+
             if diff["state"] == LeftRightCore.STATE_PARTIAL_CONTENT:
                 self.set_status(424)
             else:
