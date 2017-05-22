@@ -46,13 +46,13 @@ python -m leftright -h
 curl -XPOST -vv http://localhost:8080/v1/diff/abc/left/Y29udGVudHJpa25hc2tqZGxhbWRsa3Nh
 
 # Retrieving string from left side
-curl -XGET -vv http://localhost:8080/v1/diff/abc/left/Y29udGVudHJpa25hc2tqZGxhbWRsa3Nh
+curl -XGET -vv http://localhost:8080/v1/diff/abc/left
 
 # Registering a new string to right side
-curl -XPOST -vv http://localhost:8080/v1/diff/abc/left/Y29udGVudHJpa25hc2tqZGxhbWRsa3Nh
+curl -XPOST -vv http://localhost:8080/v1/diff/abc/right/Y29udGVudHJpZ2h0
 
 # Retrieving string from right side
-curl -XGET -vv http://localhost:8080/v1/diff/abc/right/Y29udGVudHJpZ2h0
+curl -XGET -vv http://localhost:8080/v1/diff/abc/right
 
 # Retrieving full diff report comparing left to right side
 curl -XGET -vv http://localhost:8080/v1/diff/abc
