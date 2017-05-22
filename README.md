@@ -22,6 +22,7 @@ bash leftright.sh
 If you prefer to run by your own, you can run the following commands:
 virtualenv venv
 . venv/bin/activate
+pip install -r requirements.pip
 cd src
 python -m leftright
 
