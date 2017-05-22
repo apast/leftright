@@ -45,46 +45,48 @@ class LeftRightCore():
         return Base64Comparator().diff(self.get_left(id), self.get_right(id), offset)
 
     def set_left(self, id, value):
-        """TODO: Docstring for set_rigth.
+        """ Sets the value for left-side of comparison
 
-        :id: TODO
-        :value: TODO
+        :id: key of diff case
+        :value: sequences of characters to be compared to right-side
 
         """
         self._set(id, "left", value)
 
     def get_left(self, id):
-        """TODO: Docstring for set_rigth.
+        """ Returns the value of left-side of comparison
 
-        :id: TODO
+        :id: key of diff case
         :returns: left-side sequence chars for given :id key
 
         """
         return self._get(id, "left")
 
     def set_right(self, id, value):
-        """TODO: Docstring for set_rigth.
+        """ Sets the value for right-side of comparison
 
-        :id: TODO
-        :value: TODO
+        :id: key of diff case
+        :value: sequences of characters to be compared to left-side
 
         """
         self._set(id, "right", value)
 
     def get_right(self, id):
-        """TODO: Docstring for set_rigth.
+        """ Returns the value of right-side of comparison
 
-        :id: TODO
+        :id: key of diff case
         :returns: right-side sequence chars for given :id key
 
         """
         return self._get(id, "right")
 
     def get_diff(self, id):
-        """TODO: Docstring for get_diff.
+        """Returns complete result for diff comparison between left-side and 
+        right-side pair of char sequences
 
-        :id: diff ID
-        :returns: TODO
+        :id: key of diff case
+        :returns: complete report with possible states of comparison.
+        :raises: KeyError if no sequences (left/right) were registered for this key
 
         """
         left_in = "%s:left"%id in self.store
