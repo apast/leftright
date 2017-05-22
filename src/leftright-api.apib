@@ -1,0 +1,43 @@
+FORMAT: 1A
+
+# left-right-diff
+Left Right is your tool for compare two base64 formatted char sequences
+
+
+# Data Structures
+
+## Diff Result
++ state: ok (string)
+
+# Group Diff
+Resources related to comparison of char sequences
+
+## Get Pair Registration [/v1/diff/{id}]
+
+### Get Registed Pair [GET]
++ Response 404 (application/json)
+  {state: not_exists}
+
+
+## Left char sequence [/v1/diff/{id}/left]
+### Retrive left data [GET]
++ Response 200 (application/json)
+  {state: created, data: abc}
+
+### Register [POST]
++ Response 201 (application/json)
+  {state: created}
+
+
+## Right char sequence [/v1/diff/{id}/right]
+### Retrive right data [GET]
++ Response 200 (application/json)
+  {state: created, data: abc}
+
+### Register [POST]
++ Response 201 (application/json)
+  {state: created}
+
+### Register [PUT]
++ Response 200 (application/json)
+  {state: updated}
