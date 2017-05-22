@@ -2,6 +2,7 @@
 Diff binary files over HTTP
 
 [![Build Status](https://travis-ci.org/apast/leftright.svg?branch=master)](https://travis-ci.org/apast/leftright)
+[![Code Climate](https://codeclimate.com/github/apast/leftright/badges/gpa.svg)](https://codeclimate.com/github/apast/leftright)
 
 
 leftright REST API is the new web platform to compare two strings.
@@ -41,11 +42,13 @@ python -m leftright -h
 Our Travis-CI dashboard is available and there you can following the most updated info about build status, branch evolution and tests & code coverage statuses:
 
 [![Build Status](https://travis-ci.org/apast/leftright.svg?branch=master)](https://travis-ci.org/apast/leftright)
-[![Code Climate](https://codeclimate.com/github/apast/leftright/badges/gpa.svg)](https://codeclimate.com/github/apast/leftright)
 
 Hope to achieve 100% including patch tornadoweb.ioloop.IOLoop ASAP! We are almost there!
 
 ## Code Quality
+
+[![Code Climate](https://codeclimate.com/github/apast/leftright/badges/gpa.svg)](https://codeclimate.com/github/apast/leftright)
+
 Our dashboard for code quality is running over Code Climate platform and can be accessed [here](https://codeclimate.com/github/apast/leftright/).
 
 ## Stay in Touch
