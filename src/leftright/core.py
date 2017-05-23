@@ -124,9 +124,6 @@ class LeftRightCore():
         left_in = "%s:left"%id in self.store
         right_in = "%s:right"%id in self.store
 
-        if not self.exists(id):
-            raise KeyError()
-
         if left_in and right_in:
             try:
                 diff_blocks = self.build_diff_blocks(id)
