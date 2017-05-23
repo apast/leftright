@@ -3,6 +3,7 @@ Diff binary files over HTTP
 
 [![Build Status](https://travis-ci.org/apast/leftright.svg?branch=master)](https://travis-ci.org/apast/leftright)
 [![Code Climate](https://codeclimate.com/github/apast/leftright/badges/gpa.svg)](https://codeclimate.com/github/apast/leftright)
+[![codecov](https://codecov.io/gh/apast/leftright/branch/master/graph/badge.svg)](https://codecov.io/gh/apast/leftright)
 
 
 leftright REST API is the new web platform to compare two strings.
