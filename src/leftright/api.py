@@ -16,8 +16,7 @@ def is_base64(string):
     except:
         return False
 
-
-class DiffSideApiEndpoint(RequestHandler):
+class DiffGetSideApiEndpoint(RequestHandler):
 
     def initialize(self, diff_storage):
         self.core = LeftRightCore(diff_storage)
@@ -44,6 +43,11 @@ class DiffSideApiEndpoint(RequestHandler):
             self.set_status(404, "diff side not found for %s:%s" % (id, side))
             self.write_error(404)
         self.flush()
+
+class DiffPostSideApiEndpoint(RequestHandler):
+
+    def initialize(self, diff_storage):
+        self.core = LeftRightCore(diff_storage)
 
     @coroutine
     def post(self, id, side, value):
@@ -106,7 +110,7 @@ class DiffApplication(object):
         diff_storage = {}
         endpoints = [
             (r"/v1/diff/(?P<id>[^$/]+)/?$", DiffApiEndpoint, {"diff_storage": diff_storage}),
-            (r"/v1/diff/(?P<id>[^$/]+)/(?P<side>(?:left|right))/(?P<value>[0-9A-Za-z]+)$", DiffSideApiEndpoint, {"diff_storage": diff_storage}),
-            (r"/v1/diff/(?P<id>[^$/]+)/(?P<side>(?:left|right))$", DiffSideApiEndpoint, {"diff_storage": diff_storage}),
+            (r"/v1/diff/(?P<id>[^$/]+)/(?P<side>(?:left|right))/(?P<value>[0-9A-Za-z]+)$", DiffPostSideApiEndpoint, {"diff_storage": diff_storage}),
+            (r"/v1/diff/(?P<id>[^$/]+)/(?P<side>(?:left|right))$", DiffGetSideApiEndpoint, {"diff_storage": diff_storage}),
         ]
         return Application(endpoints, debug=debug)
