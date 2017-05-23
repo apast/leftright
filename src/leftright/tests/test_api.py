@@ -5,7 +5,7 @@ import unittest
 
 from tornado.testing import AsyncHTTPTestCase
 
-from leftright.api import DiffApplication, DiffApiEndpoint, DiffSideApiEndpoint, is_base64
+from leftright.api import DiffApplication, is_base64
 from leftright.core import LeftRightCore
 
 
